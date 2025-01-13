@@ -1,10 +1,10 @@
 package com.alura.literalura_challenge.models;
 
-import com.alura.literalura_challenge.services.ConvierteDatos;
+
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
+
 
 @Entity
 @Table(name = "libros")
@@ -15,11 +15,8 @@ public class Libro {
     private String titulo;
     private Long descargas;
     private String lenguaje;
-//    @Transient
-//    private ConvierteDatos convertidor = new ConvierteDatos();
 
     @ManyToOne
-    //@JoinColumn(name = "autor_id") //sacar esto despues
     private Persona autor;
 
 
@@ -90,6 +87,12 @@ public class Libro {
                         ", autor=" + autor +
                 ", descargas=" + descargas +
                 ", lenguaje= " +lenguaje;
+    }
+    public String imprimir() {
+        String idioma = new Locale(this.lenguaje).getDisplayLanguage(new Locale("es"));
+        String str = " - " + this.titulo + " - Autor/a: " + this.autor.getNombre()
+                + " - Idioma: " + idioma + " - Descargas: " + this.descargas;
+        return str;
     }
 
 }

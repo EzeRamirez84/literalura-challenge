@@ -2,7 +2,10 @@ package com.alura.literalura_challenge.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -71,9 +74,6 @@ public class Persona {
         return libros;
     }
 
-    public void setLibros(List<Libro> libros) {
-        this.libros = libros;
-    }
 
     @Override
     public String toString() {
@@ -83,14 +83,22 @@ public class Persona {
                 ", ID: " + id;
     }
 
-    public void addLibro(Libro libro) {
-        if(this.libros != null){
-            if(!this.libros.stream().anyMatch(l -> l.getId() == libro.getId())){
-                this.libros.add(libro);
-            }
-        }else{
-            this.libros = new ArrayList<>();
-            this.libros.add(libro);
+    public Long getEdad(){
+        if(this.getAnioMuerte() != null){
+            return this.getAnioMuerte() - this.getAnioNacimiento();
+        }else {
+            LocalDate fechaActual = LocalDate.now();
+            return fechaActual.getYear() - this.getAnioNacimiento();
         }
     }
+    public String imprimir() {
+        String str = " - " + this.nombre + " - Nacido en " + this.getAnioNacimiento() + " - ";
+        if(this.getAnioMuerte() != null){
+            str += "Fallecido en "+ this.getAnioMuerte() + " a los " + getEdad() + " años";
+        }else {
+            str += "Edad actual: " + getEdad();
+        }
+        return str;
+    }
+
 }
