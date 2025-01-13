@@ -32,4 +32,8 @@ public class ConvierteDatos implements IConvierteDatos {
         return datos.stream().map(d -> new Libro(d))
                 .collect(Collectors.toList());
     }
+
+    public Persona convertirAPersona(DatosPersona datos) {
+        return new Persona(datos);
+    }
 }
